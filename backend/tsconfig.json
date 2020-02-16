@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "./build",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "serialport": ["@types/serialport"],
+      "node-intelhex": ["@types/node-intelhex"]
+    }
+  },
+  "include": ["src", "../shared"]
+}
