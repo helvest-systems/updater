@@ -5,12 +5,17 @@
   "license": "MIT",
   "description": "Desktop application for updating Helvest devices",
   "author": "Helvest Developers <support@helvest.ch>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helvest-systems/updater.git"
+  },
   "main": "build/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production run-s clean compile copy-* build-*",
-    "build-frontend": "cd ../frontend && yarn build && cp -R build/* ../backend/build/frontend",
-    "build-backend": "electron-builder -wlm",
+    "build-frontend": "pushd ../frontend && yarn build && popd",
+    "build-backend": "electron-builder -w",
     "copy-entitlements": "cp entitlements.mac.plist build/",
+    "copy-frontend": "mkdir -p build/frontend && cp -r ../frontend/build/* build/frontend",
     "clean": "rimraf build/* dist/*",
     "compile": "tsc",
     "electron": "cross-env NODE_ENV=development electron .",
@@ -21,12 +26,12 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "electron-log": "^4.0.6",
     "gitly": "^1.1.3",
     "is-online": "^8.2.1",
     "node-intelhex": "^2.0.4",
     "rimraf": "^3.0.2",
-    "serialport": "^8.0.7"
+    "serialport": "^8.0.7",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
@@ -34,59 +39,14 @@
     "@types/node": "^13.7.1",
     "@types/rimraf": "^2.0.3",
     "cross-env": "^7.0.0",
+    "dotenv": "^8.2.0",
     "electron": "7.1.12",
     "electron-builder": "^22.3.2",
+    "electron-notarize": "^0.2.1",
+    "electron-updater": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "onchange": "^6.1.0",
     "typescript": "^3.7.5",
     "wait-on": "^4.0.0"
-  },
-  "build": {
-    "appId": "ch.helvest",
-    "copyright": "Helvest Systems GmbH",
-    "productName": "Helvest Updater",
-    "artifactName": "${productName}-${arch}.${ext}",
-    "publish": [
-      "github"
-    ],
-    "win": {
-      "target": "nsis"
-    },
-    "nsis": {
-      "oneClick": true,
-      "perMachine": true,
-      "deleteAppDataOnUninstall": true
-    },
-    "linux": {
-      "category": "Network",
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "armv7l",
-            "x64",
-            "arm64"
-          ]
-        },
-        {
-          "target": "deb",
-          "arch": [
-            "armv7l",
-            "x64",
-            "arm64"
-          ]
-        }
-      ]
-    },
-    "mac": {
-      "category": "public.app-category.utilities",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "entitlements": "build/entitlements.mac.plist",
-      "entitlementsInherit": "build/entitlements.mac.plist"
-    },
-    "files": [
-      "build/**/*"
-    ]
   }
 }

@@ -17,14 +17,10 @@ const CACHE = path.join(app.getPath('userData'), 'Updates Cache');
 
 let update: UpdateData | null = null;
 
-export async function checkFirmwareUpdates({
-  model,
-  hwVersion,
-  fwVersion,
-}: DeviceData) {
+export async function checkFirmwareUpdates({ model, hwVersion, fwVersion }: DeviceData) {
   const online = await isOnline();
   if (!online) {
-    const mainWindow = window.getMainWindow();
+    const mainWindow = window.getWindow();
     mainWindow?.webContents.send('app/is-offline');
   } else await updateCache();
 

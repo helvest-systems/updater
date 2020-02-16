@@ -9,7 +9,7 @@
     "build": "cd backend && yarn build",
     "watch-frontend": "cd frontend && yarn start",
     "watch-backend": "cd backend && yarn start",
-    "start": "DEBUG=updater* DEBUG_COLORS=1 FORCE_COLOR=1 run-p watch-*",
+    "start": "DEBUG=updater:* DEBUG_COLORS=1 FORCE_COLOR=1 run-p watch-*",
     "postinstall": "run-p install-*",
     "install-backend": "cd backend && yarn install",
     "install-frontend": "cd frontend && yarn install"

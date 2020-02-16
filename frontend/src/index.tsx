@@ -3,11 +3,20 @@ import ReactDOM from 'react-dom';
 import { App } from './components/App';
 import { ConnectionProvider } from './context/connection';
 import { UpdateProvider } from './context/update';
+import { createGlobalStyle } from 'styled-components';
 import * as serviceWorker from './serviceWorker';
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    margin: 0;
+    -webkit-app-region: drag;
+  }
+`;
 
 ReactDOM.render(
   <ConnectionProvider>
     <UpdateProvider>
+      <GlobalStyles />
       <App />
     </UpdateProvider>
   </ConnectionProvider>,

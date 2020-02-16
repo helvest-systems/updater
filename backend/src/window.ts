@@ -1,30 +1,46 @@
 import path from 'path';
-import url from 'url';
+import debug from 'debug';
 import { BrowserWindow } from 'electron';
-import { START_URL, IS_DEV } from './constants';
+import * as constants from './constants';
 
-let mainWindow: BrowserWindow | null;
+const d = debug('updater:window');
+
+let window: BrowserWindow | null;
 
 export function create() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+  window = new BrowserWindow({
+    height: 212,
+    width: 600,
+    frame: false,
+    titleBarStyle: 'hidden',
+    autoHideMenuBar: true,
+    resizable: false,
+    fullscreenable: false,
+    maximizable: false,
+    show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
 
-  mainWindow.loadURL(START_URL);
+  window.loadURL(constants.START_URL);
 
-  if (IS_DEV) mainWindow.webContents.openDevTools();
+  if (constants.DEV) {
+    window.webContents.openDevTools({ mode: 'detach' });
+  }
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  window.on('closed', () => {
+    d('App Window closed');
+    window = null;
+  });
+
+  window.on('ready-to-show', () => {
+    d('Window is ready to show');
+    window!.show();
   });
 }
 
-export function getMainWindow() {
-  return mainWindow;
+export function getWindow() {
+  return window;
 }

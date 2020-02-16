@@ -38,7 +38,7 @@ export function init() {
   });
 
   ipcMain.on('update/install', async event => {
-    const mainWindow = window.getMainWindow();
+    const mainWindow = window.getWindow();
 
     client.onFlashing = progress => {
       mainWindow?.webContents.send('update/installing', { progress });

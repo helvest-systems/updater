@@ -1,27 +1,17 @@
-import { app } from 'electron';
 import debug from 'debug';
 import logger from './loggger';
-import * as window from './window';
-import * as ipc from './ipc';
+import * as app from './app';
 
 const d = debug('updater:main');
 
-d('Starting Application!');
-logger.info('Starting Application!');
+process
+  .on('uncaughtException', error => {
+    d('UNCAUGHT EXCEPTION', error);
+    logger.error('UNCAUGHT EXCEPTION', { kind: error.name, reason: error.message, error });
+  })
+  .on('unhandledRejection', (reason, promise) => {
+    d('UNHANDLED REJECTION', reason);
+    logger.error('UNHANDLED REJECTION', { reason, promise });
+  });
 
-app.on('ready', () => {
-  d('Creating main window');
-  window.create();
-
-  d('Initializing IPC');
-  ipc.init();
-});
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
-});
-
-app.on('activate', () => {
-  d('Creating main window');
-  window.create();
-});
+app.start();
