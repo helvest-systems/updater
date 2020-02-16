@@ -2,7 +2,6 @@ appId: 'ch.helvest'
 productName: 'Helvest Updater'
 copyright: 'Helvest Systems GmbH'
 artifactName: '${productName}-${arch}.${ext}'
-afterSign: 'scripts/notarize.js'
 publish: 'github'
 
 win:
