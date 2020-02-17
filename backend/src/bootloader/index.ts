@@ -10,6 +10,7 @@ import {
   SUCCESS_RESPONSE,
 } from './constants';
 import { timify } from './utils';
+import logger from '../loggger';
 
 const d = debug('updater:client');
 
@@ -30,6 +31,7 @@ class Client {
       return Promise.reject('Unable to connect');
     }
 
+    logger.info('Succesfully connected');
     return this.getDeviceData();
   }
 
@@ -98,6 +100,7 @@ class Client {
       new Promise(resolve => {
         port.open(err => {
           if (err) {
+            logger.info('Cannot open port', { port: port.path, reason: err.message });
             return;
           }
 

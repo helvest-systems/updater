@@ -1,10 +1,14 @@
 import path from 'path';
 import fs from 'fs';
-import { app, ipcMain } from 'electron';
+import debug from 'debug';
 import isOnline from 'is-online';
 import { fetch, extract } from 'gitly';
 import rimraf from 'rimraf';
 import * as window from './window';
+import logger from './loggger';
+import { CACHE_PATH } from './constants';
+
+const d = debug('updater:update');
 
 type UpdateData = Omit<DeviceData, 'fwVersion'> & {
   version: string;
@@ -13,25 +17,38 @@ type UpdateData = Omit<DeviceData, 'fwVersion'> & {
 };
 
 const REPO = 'bitbucket:AWEL-GmbH/updates';
-const CACHE = path.join(app.getPath('userData'), 'Updates Cache');
 
 let update: UpdateData | null = null;
 
 export async function checkFirmwareUpdates({ model, hwVersion, fwVersion }: DeviceData) {
   const online = await isOnline();
-  if (!online) {
-    const mainWindow = window.getWindow();
-    mainWindow?.webContents.send('app/is-offline');
-  } else await updateCache();
 
-  const updatePath = path.join(CACHE, `${model}/${hwVersion}`);
-  const manifest = fs.readFileSync(`${updatePath}/manifest.json`);
-  const data = JSON.parse(manifest.toString());
+  if (online) {
+    logger.info('App online, start cache update');
+    await updateCache();
+  } else {
+    logger.info('App is offline, try to use cached updates');
+    window.emit('app/is-offline');
+  }
 
-  if (data.sources[0].version == fwVersion) return false;
+  const manifestJson = path.join(CACHE_PATH, `${model}/${hwVersion}/manifest.json`);
+  if (!fs.existsSync(manifestJson)) {
+    logger.info('Cache is empty or manifest file was deleted');
+    window.emit('update/cache-is-empty');
+    return;
+  }
 
-  update = { model, hwVersion, ...data.sources[0] };
-  return true;
+  const content = fs.readFileSync(manifestJson);
+  const updates = JSON.parse(content.toString());
+
+  if (updates[0].version == fwVersion) {
+    logger.info('Update unavailable');
+    return false;
+  } else {
+    update = { model, hwVersion, ...updates[0] };
+    logger.info('Update available', update);
+    return true;
+  }
 }
 
 export function getUpdateVersion() {
@@ -40,15 +57,16 @@ export function getUpdateVersion() {
 
 export function getFilePath() {
   const { model, hwVersion, file } = update!;
-  return path.join(CACHE, `${model}/${hwVersion}/${file}`);
+  return path.join(CACHE_PATH, `${model}/${hwVersion}/${file}`);
 }
 
 async function updateCache() {
-  const fetchPath = await fetch(REPO, { temp: CACHE });
-  await extract(fetchPath, CACHE, {
+  logger.info('Fetching firmware update...');
+  const fetchPath = await fetch(REPO, { temp: CACHE_PATH });
+  await extract(fetchPath, CACHE_PATH, {
     extract: {
       filter: path => !path.includes('.gitignore'),
     },
   });
-  rimraf.sync(path.join(CACHE, 'bitbucket'));
+  rimraf.sync(path.join(CACHE_PATH, 'bitbucket'));
 }

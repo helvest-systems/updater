@@ -44,3 +44,8 @@ export function create() {
 export function getWindow() {
   return window;
 }
+
+export function emit(event: string, ...args: any[]) {
+  if (!window) return;
+  window.webContents.send(event, ...args);
+}

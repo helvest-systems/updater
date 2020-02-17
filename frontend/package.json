@@ -6,6 +6,10 @@
   "description": "Desktop application for updating Helvest devices",
   "author": "Helvest Developers <support@helvest.ch>",
   "homepage": "./",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helvest-systems/updater.git"
+  },
   "scripts": {
     "start": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",

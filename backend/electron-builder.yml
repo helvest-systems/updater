@@ -2,7 +2,8 @@ appId: 'ch.helvest'
 productName: 'Helvest Updater'
 copyright: 'Helvest Systems GmbH'
 artifactName: '${productName}-${arch}.${ext}'
-publish: 'github'
+publish:
+  - 'github'
 
 win:
   target: 'nsis'

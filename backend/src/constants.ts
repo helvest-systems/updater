@@ -14,7 +14,7 @@ export const LINUX = PLATFORM === 'linux';
 // App Paths
 export const USER_PATH = app.getPath('userData');
 export const LOG_PATH = path.join(USER_PATH, 'logs');
-export const UPDATES_PATH = path.join(USER_PATH, 'updates');
+export const CACHE_PATH = path.join(USER_PATH, 'updates-cache');
 
 export const UPDATES_REPO_URL = 'https://bitbucket.org/AWEL-GmbH/updates/get/master.zip';
 
