@@ -1,19 +1,22 @@
-appId: 'ch.helvest'
-productName: 'Helvest Updater'
-copyright: 'Helvest Systems GmbH'
-artifactName: '${productName}-${arch}.${ext}'
+appId: "ch.helvest"
+productName: "Helvest Updater"
+copyright: "Helvest Systems GmbH"
+artifactName: "${productName}-${arch}.${ext}"
 publish:
-  - 'github'
+  - "github"
+
+linux:
+  target: "AppImage"
 
 win:
-  target: 'nsis'
+  target: "nsis"
 
 mac:
-  category: 'public.app-category.utilities'
+  category: "public.app-category.utilities"
   hardenedRuntime: true
   gatekeeperAssess: false
-  entitlements: 'build/entitlements.mac.plist'
-  entitlementsInherit: 'build/entitlements.mac.plist'
+  entitlements: "build/entitlements.mac.plist"
+  entitlementsInherit: "build/entitlements.mac.plist"
 
 files:
-  - 'build/**/*'
+  - "build/**/*"

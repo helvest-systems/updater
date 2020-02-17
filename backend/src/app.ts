@@ -16,7 +16,9 @@ export function start() {
 
   app.on('ready', async () => {
     try {
-      await autoUpdater.checkForUpdatesAndNotify();
+      logger.info('Checking for updates...');
+      const result = await autoUpdater.checkForUpdatesAndNotify();
+      logger.info('Checking completed.', result);
     } catch (err) {
       d('Error while updating the updater -.-');
       logger.error('An error occure while updating the app', err);
