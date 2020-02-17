@@ -12,12 +12,9 @@ export function create() {
   window = new BrowserWindow({
     height: 212,
     width: 600,
-    frame: false,
-    titleBarStyle: 'hidden',
     autoHideMenuBar: true,
+    titleBarStyle: 'hidden',
     resizable: false,
-    fullscreenable: false,
-    maximizable: false,
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

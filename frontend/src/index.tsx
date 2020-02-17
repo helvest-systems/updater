@@ -9,7 +9,6 @@ import * as serviceWorker from './serviceWorker';
 const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
-    -webkit-app-region: drag;
   }
 `;
 
