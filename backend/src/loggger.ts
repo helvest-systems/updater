@@ -3,7 +3,9 @@ import winston from 'winston';
 import { LOG_PATH } from './constants';
 
 const consoleFormat = winston.format.combine(
-  winston.format.timestamp(),
+  winston.format.timestamp({
+    format: 'YYYY-MM-DD HH:mm:ss',
+  }),
   winston.format.prettyPrint({ colorize: true }),
 );
 

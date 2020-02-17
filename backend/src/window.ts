@@ -14,6 +14,7 @@ export function create() {
     width: 600,
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
+    maximizable: false,
     resizable: false,
     show: false,
     webPreferences: {

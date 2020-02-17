@@ -11,4 +11,6 @@ export const Button = styled.button`
   font-family: Lato;
   font-size: 16px;
   color: #fff;
+  -webkit-app-region: no-drag; /* Necessary to maintain button clickable 
+                                  when all the window is draggable */
 `;

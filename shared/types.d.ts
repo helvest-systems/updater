@@ -8,6 +8,7 @@ type BackendEvent =
 
   // Update events
   | 'update/check'
+  | 'update/cache-empty'
   | 'update/available'
   | 'update/unavailable'
   | 'update/install'

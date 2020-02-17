@@ -7,6 +7,7 @@ import { useUpdate, UpdateState } from '../context/update';
 type MessageType = Partial<{ [Key in UpdateState]: string }>;
 const MESSAGES: MessageType = {
   SEARCH_UPDATE: 'Searching update...',
+  CACHE_EMPTY: "You're offline and updates cache is empty. Retry when you're online.",
   UPDATE_UNAVAILABLE: 'Nice! You have already the newest version!',
   UPDATING: 'Updating...',
   COMPLETED: 'Awesome! You’re device is up to date now!',
@@ -36,11 +37,7 @@ export function UpdatePage() {
 
   if (state === 'SEARCH_UPDATE') {
     return (
-      <Page
-        message={
-          isOffline ? 'App is offline. Searching inside cache...' : message
-        }
-      >
+      <Page message={isOffline ? 'App is offline. Searching inside cache...' : message}>
         <Button>Loading...</Button>
       </Page>
     );
@@ -54,18 +51,14 @@ export function UpdatePage() {
     );
   }
 
-  const quit = state === 'UPDATE_UNAVAILABLE' || state === 'COMPLETED';
+  const quit = state === 'UPDATE_UNAVAILABLE' || state === 'COMPLETED' || state === 'CACHE_EMPTY';
 
   return (
     <Page message={message}>
       {quit ? (
-        <Button onClick={() => window.emitBackendEvent('app/quit')}>
-          Quit
-        </Button>
+        <Button onClick={() => window.emitBackendEvent('app/quit')}>Quit</Button>
       ) : (
-        <Button onClick={installUpdate}>
-          {isFailure ? 'Retry' : 'Update Now'}
-        </Button>
+        <Button onClick={installUpdate}>{isFailure ? 'Retry' : 'Update Now'}</Button>
       )}
     </Page>
   );

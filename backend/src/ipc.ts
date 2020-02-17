@@ -26,12 +26,13 @@ export function init() {
   });
 
   ipcMain.on('update/check', async event => {
-    const updateAvailable = await update.checkFirmwareUpdates(deviceData!);
+    const info = await update.checkFirmwareUpdates(deviceData!);
 
-    if (updateAvailable) {
+    if (info.available) {
       const version = update.getUpdateVersion();
-      console.log(update.getFilePath());
       event.reply('update/available', { version });
+    } else if (info.cached == null) {
+      event.reply('update/cache-empty');
     } else {
       event.reply('update/unavailable');
     }
@@ -45,7 +46,7 @@ export function init() {
     };
 
     try {
-      await client.flash(update.getFilePath());
+      await client.flash(update.getFilePath()!);
       event.reply('update/installed');
     } catch (err) {
       console.log(err);

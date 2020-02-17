@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 export type UpdateState =
   | 'INITIAL'
   | 'SEARCH_UPDATE'
+  | 'CACHE_EMPTY'
   | 'UPDATE_AVAILABLE'
   | 'UPDATE_UNAVAILABLE'
   | 'UPDATING'
@@ -20,9 +21,7 @@ const UpdateContext = React.createContext<UpdateCtx | undefined>(undefined);
 
 export const UpdateProvider: React.FC<{}> = ({ children }) => {
   const [state, setState] = useState<UpdateState>('INITIAL');
-  const [updateVersion, setUpdateVersion] = useState<string | undefined>(
-    undefined,
-  );
+  const [updateVersion, setUpdateVersion] = useState<string | undefined>(undefined);
 
   const searchUpdate = React.useCallback(() => {
     setState('SEARCH_UPDATE');
@@ -35,14 +34,14 @@ export const UpdateProvider: React.FC<{}> = ({ children }) => {
   }
 
   React.useEffect(() => {
+    window.addBackendListener('update/cache-empty', () => setState('CACHE_EMPTY'));
+
     window.addBackendListener('update/available', ({ version }) => {
       setState('UPDATE_AVAILABLE');
       setUpdateVersion(version);
     });
 
-    window.addBackendListener('update/unavailable', () =>
-      setState('UPDATE_UNAVAILABLE'),
-    );
+    window.addBackendListener('update/unavailable', () => setState('UPDATE_UNAVAILABLE'));
 
     window.addBackendListener('update/installed', () => setState('COMPLETED'));
 
@@ -50,9 +49,7 @@ export const UpdateProvider: React.FC<{}> = ({ children }) => {
   }, []);
 
   return (
-    <UpdateContext.Provider
-      value={{ state, updateVersion, searchUpdate, installUpdate }}
-    >
+    <UpdateContext.Provider value={{ state, updateVersion, searchUpdate, installUpdate }}>
       {children}
     </UpdateContext.Provider>
   );
