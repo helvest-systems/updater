@@ -1,10 +1,13 @@
 {
   "private": true,
   "name": "helvest-updater",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "license": "MIT",
   "description": "Desktop application for updating Helvest devices",
-  "author": "Helvest Developers <support@helvest.ch>",
+  "author": {
+    "name": "Helvest Systems GmbH",
+    "email": "support@helvest.ch"
+  },
   "homepage": "./",
   "repository": {
     "type": "git",

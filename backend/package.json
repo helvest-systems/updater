@@ -1,10 +1,13 @@
 {
   "private": true,
   "name": "helvest-updater",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "license": "MIT",
   "description": "Desktop application for updating Helvest devices",
-  "author": "Helvest Developers <support@helvest.ch>",
+  "author": {
+    "name": "Helvest Systems GmbH",
+    "email": "support@helvest.ch"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/helvest-systems/updater.git"
@@ -14,7 +17,7 @@
     "build": "cross-env NODE_ENV=production run-s clean compile frontend-*",
     "frontend-build": "pushd ../frontend && yarn build && popd",
     "frontend-copy": "mkdir -p build/frontend && cp -r ../frontend/build/* build/frontend",
-    "pack": "yarn build && electron-builder -wml",
+    "package": "yarn build && electron-builder -wml",
     "dist": "yarn build && electron-builder -wml -p always",
     "clean": "rimraf build/* dist/*",
     "compile": "tsc",

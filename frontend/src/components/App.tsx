@@ -12,7 +12,7 @@ export function App() {
 
   if (isFirstRender) {
     return (
-      <Page message={'Last Checked: Today at 9.00'}>
+      <Page message={'Last Checked: Today at 18.41'}>
         <Button onClick={() => setIsFirstRender(false)}>Check for Updates...</Button>
       </Page>
     );

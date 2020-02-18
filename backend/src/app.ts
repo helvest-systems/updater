@@ -6,8 +6,6 @@ import * as window from './window';
 import * as ipc from './ipc';
 import { ENV } from './constants';
 
-autoUpdater.on('update-downloaded', () => autoUpdater.quitAndInstall());
-
 const d = debug('updater:main');
 
 export function start() {
