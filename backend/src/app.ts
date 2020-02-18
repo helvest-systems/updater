@@ -8,6 +8,8 @@ import { ENV } from './constants';
 
 const d = debug('updater:main');
 
+autoUpdater.logger = logger;
+
 export function start() {
   d('Application started in %s', ENV);
   logger.info('Application started', { ENV });
