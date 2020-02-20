@@ -18,7 +18,6 @@ export const CACHE_PATH = path.join(USER_PATH, 'updates-cache');
 
 export const UPDATES_REPO_URL = 'https://bitbucket.org/AWEL-GmbH/updates/get/master.zip';
 
-export const FRONTEND_DIR = path.join(__dirname, 'frontend');
 export const START_URL = DEV
   ? 'http://localhost:3000'
-  : `file://${path.resolve(FRONTEND_DIR, './index.html')}`;
+  : `file://${path.join(__dirname, 'index.html')}`;
