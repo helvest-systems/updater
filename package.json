@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@helvest/updater",
+  "name": "helvest-updater",
   "version": "0.1.11",
   "license": "MIT",
   "description": "Desktop application for updating Helvest devices",

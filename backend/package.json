@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@helvest/updater",
+  "name": "helvest-updater",
   "version": "0.1.11",
   "license": "MIT",
   "description": "Desktop application for updating Helvest devices",
@@ -17,9 +17,8 @@
     "build": "cross-env NODE_ENV=production run-s clean compile frontend-*",
     "frontend-build": "pushd ../frontend && yarn build && popd",
     "frontend-copy": "mkdir -p build/frontend && cp -r ../frontend/build/* build/",
-    "copy-images": "cp -R ./src/images ./build/",
     "package": "yarn build && electron-builder -w",
-    "dist": "yarn build && electron-builder -wml -p always",
+    "dist": "yarn build && DEBUG=electron-builder electron-builder -wml -p always",
     "clean": "rimraf build/* dist/*",
     "compile": "tsc",
     "electron": "cross-env NODE_ENV=development electron .",
@@ -60,6 +59,11 @@
     ],
     "win": {
       "target": "nsis"
+    },
+    "linux": {
+      "target": {
+        "target": "AppImage"
+      }
     },
     "files": [
       "build/**/*"
