@@ -10,12 +10,14 @@ let window: BrowserWindow | null;
 export function create() {
   // Create the browser window.
   window = new BrowserWindow({
-    height: 212,
     width: 600,
+    height: 212,
+    useContentSize: true,
+    backgroundColor: '#1e1e24',
     autoHideMenuBar: true,
     titleBarStyle: 'hidden',
     maximizable: false,
-    resizable: false,
+    fullscreenable: false,
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
