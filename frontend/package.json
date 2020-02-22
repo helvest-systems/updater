@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "helvest-updater",
-  "version": "0.1.11",
+  "version": "0.1.10",
   "license": "MIT",
   "description": "Desktop application for updating Helvest devices",
   "author": {
@@ -22,8 +22,8 @@
   "dependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0",
-    "styled-components": "^5.0.0"
+    "react-scripts": "3.4.0",
+    "styled-components": "^5.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,13 +43,13 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
-    "@testing-library/user-event": "^8.1.0",
-    "@types/jest": "^25.1.2",
-    "@types/node": "^13.7.1",
-    "@types/react": "^16.9.19",
+    "@testing-library/user-event": "^10.0.0",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.4",
+    "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
-    "@types/styled-components": "^4.4.2",
-    "cross-env": "^6.0.3",
-    "typescript": "^3.7.5"
+    "@types/styled-components": "^5.0.0",
+    "cross-env": "^7.0.0",
+    "typescript": "^3.8.2"
   }
 }
